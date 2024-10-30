@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instalação do ROS Melodic com Gazebo, RViz e TurtleBot3 no Ubuntu 18.04</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+    }
+    h1, h2 {
+      color: #333;
+    }
+    pre {
+      background-color: #f4f4f4;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+    code {
+      color: #c7254e;
+      background-color: #f9f2f4;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: square;
+      margin-left: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Instalação do ROS Melodic com Gazebo, RViz e TurtleBot3 no Ubuntu 18.04</h1>
+
+  <h2>Objetivo do Material</h2>
+  <p>Instalar o ROS Melodic em uma máquina com Ubuntu 18.04 e configurar o Gazebo, RViz e os pacotes do TurtleBot3 para desenvolvimento robótico.</p>
+
+  <h2>Pré-requisitos</h2>
+  <ul>
+    <li>Ubuntu 18.04 instalado.</li>
+    <li>Conexão com a internet.</li>
+    <li>2 GB de espaço livre em disco (mínimo).</li>
+  </ul>
+
+  <h2>Instalação do ROS Melodic</h2>
+
+  <h3>Configurar os Repositórios ROS</h3>
+  <pre><code>sudo apt update
+sudo apt install curl gnupg2 lsb-release
+curl -sSL 'http://repo.ros2.org/repos.key' | sudo apt-key add -
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'
+sudo apt update</code></pre>
+
+  <h3>Instalar o ROS Melodic</h3>
+  <pre><code>sudo apt install ros-melodic-desktop-full
+sudo rosdep init
+rosdep update</code></pre>
+
+  <h3>Configurar o Ambiente ROS</h3>
+  <pre><code>echo "source /opt/ros/melodic/setup.bash" &gt;&gt; ~/.bashrc
+source ~/.bashrc</code></pre>
+
+  <h2>Instalação do Gazebo e RViz</h2>
+  <h3>Instalando o Gazebo</h3>
+  <pre><code>sudo apt install ros-melodic-gazebo-ros-pkgs ros-melodic-gazebo-ros-control</code></pre>
+
+  <h3>Instalando o RViz</h3>
+  <pre><code>sudo apt install ros-melodic-rviz</code></pre>
+
+  <h2>Instalação dos Pacotes do TurtleBot3</h2>
+  <pre><code>sudo apt install ros-melodic-turtlebot3 ros-melodic-turtlebot3-simulations
+echo "export TURTLEBOT3_MODEL=burger" &gt;&gt; ~/.bashrc
+source ~/.bashrc</code></pre>
+
+  <h2>Executando o TurtleBot3 no Gazebo</h2>
+  <pre><code>roscore</code></pre>
+  <pre><code>roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch</code></pre>
+
+  <h2>Usando o RViz para Visualizar o TurtleBot3</h2>
+  <pre><code>roslaunch turtlebot3_bringup turtlebot3_model.launch</code></pre>
+
+  <h2>Controlando o TurtleBot3 na Simulação</h2>
+  <h3>Controle pelo Teclado</h3>
+  <pre><code>roslaunch turtlebot3_teleop turtlebot3_teleop_key.launch</code></pre>
+
+  <h3>Publicação de Comandos de Movimento</h3>
+  <pre><code>rostopic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 0.2, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.5}}'</code></pre>
+
+  <h2>Testando Sensores do TurtleBot3</h2>
+  <pre><code>rostopic echo /scan</code></pre>
+
+  <h2>Configuração do Workspace ROS (opcional)</h2>
+  <pre><code>mkdir -p ~/catkin_ws/src
+cd ~/catkin_ws/
+catkin_make</code></pre>
+
+  <pre><code>echo "source ~/catkin_ws/devel/setup.bash" &gt;&gt; ~/.bashrc
+source ~/.bashrc</code></pre>
+
+  <h2>Resumo e Considerações</h2>
+  <p>Agora você possui uma instalação completa do ROS Melodic no Ubuntu 18.04 com Gazebo, RViz e os pacotes do TurtleBot3. Esse ambiente permite desenvolver e testar algoritmos de controle e navegação com o TurtleBot3 em simulação.</p>
+
+</body>
+</html>
+
